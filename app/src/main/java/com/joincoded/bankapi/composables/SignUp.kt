@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.joincoded.bankapi.viewmodel.BankViewModel
 
 @Composable
-fun SignUpPage(bankViewMoedel : BankViewModel){
+fun SignUpPage(bankViewModel : BankViewModel){
     Card(modifier = Modifier
         .fillMaxSize()) {
         var username by remember {mutableStateOf("")}
@@ -37,7 +37,7 @@ fun SignUpPage(bankViewMoedel : BankViewModel){
 
         Button(
             onClick = {
-                bankViewMoedel.signup(username,password,"")
+                bankViewModel.signup(username,password,"")
             },
             modifier = Modifier.fillMaxWidth().padding(20.dp)
         ) {
