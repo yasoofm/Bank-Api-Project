@@ -9,7 +9,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.joincoded.bankapi.viewmodel.BankViewModel
 
 @Composable
-fun AccountPage(bankViewModel: BankViewModel = viewModel(), toDeposit: () -> Unit, toWithdraw: () -> Unit){
+fun AccountPage(bankViewModel: BankViewModel = viewModel(), toDeposit: () -> Unit, toWithdraw: () -> Unit, toUpdate: () -> Unit){
     Column {
         val user = bankViewModel.user
         Text(text = user?.username ?: "")
@@ -22,6 +22,9 @@ fun AccountPage(bankViewModel: BankViewModel = viewModel(), toDeposit: () -> Uni
             Button(onClick = { toWithdraw() }) {
                 Text(text = "Withdraw")
             }
+        }
+        Button(onClick = { toUpdate() }) {
+            Text(text = "Update profile")
         }
     }
 }

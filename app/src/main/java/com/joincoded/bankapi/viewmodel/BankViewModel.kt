@@ -19,7 +19,6 @@ class BankViewModel : ViewModel() {
     var user: User? by mutableStateOf(null)
     var transactions: List<Transaction>? by mutableStateOf(null)
 
-
     fun signup(username: String, password: String, image: String = "", nav: () -> Unit) {
         viewModelScope.launch {
             try {
@@ -53,11 +52,13 @@ class BankViewModel : ViewModel() {
     fun deposit(amount: Double, nav: () -> Unit) {
         viewModelScope.launch {
             try {
-                val response = apiService.deposit(token = token?.getBearerToken(),
-                    AmountChange(amount))
-                if (response.isSuccessful){
+                val response = apiService.deposit(
+                    token = token?.getBearerToken(),
+                    AmountChange(amount)
+                )
+                if (response.isSuccessful) {
                     println("Deposit Successful")
-                }else{
+                } else {
                     println("Deposit Failed")
                 }
             } catch (e: Exception) {
@@ -70,12 +71,12 @@ class BankViewModel : ViewModel() {
         }
     }
 
-    fun getAccount(){
+    fun getAccount() {
         viewModelScope.launch {
             try {
                 val response = apiService.getAccount(token = token?.getBearerToken())
                 user = response.body()
-            }   catch (e: Exception) {
+            } catch (e: Exception) {
                 println("Error $e")
             }
         }
@@ -84,11 +85,13 @@ class BankViewModel : ViewModel() {
     fun withdraw(amount: Double, nav: () -> Unit) {
         viewModelScope.launch {
             try {
-                val response = apiService.withdraw(token = token?.getBearerToken(),
-                    AmountChange(amount))
-                if (response.isSuccessful){
+                val response = apiService.withdraw(
+                    token = token?.getBearerToken(),
+                    AmountChange(amount)
+                )
+                if (response.isSuccessful) {
                     println("Withdraw Successful")
-                }else{
+                } else {
                     println("Withdraw Failed")
                 }
             } catch (e: Exception) {
@@ -101,21 +104,40 @@ class BankViewModel : ViewModel() {
         }
     }
 
-    fun transfer(username: String,amount: Double){
+    fun transfer(username: String, amount: Double) {
         viewModelScope.launch {
             try {
 
-                val response = apiService.transfer(username,token = token?.getBearerToken(),AmountChange(amount))
-                if (response.isSuccessful){
+                val response = apiService.transfer(
+                    username,
+                    token = token?.getBearerToken(),
+                    AmountChange(amount)
+                )
+                if (response.isSuccessful) {
 
                     println("Successful transfer")
-                }else{
+                } else {
 
                     println("Failed transfer")
                 }
-                }catch (e: Exception){
-                    println("Error $e")
-                }
+            } catch (e: Exception) {
+                println("Error $e")
+            }
+        }
+    }
+    fun updateAccount(username: String,password: String, nav: () -> Unit){
+        viewModelScope.launch {
+            try {
+                val response = apiService.updateAccount(token = token?.getBearerToken(),
+                    user = User(username, password, null, "", null))
+            } catch (e: Exception){
+                println("Error $e")
+            } finally {
+                getAccount()
+                nav()
+            }
+
+
         }
     }
 
@@ -132,3 +154,4 @@ class BankViewModel : ViewModel() {
         }
     }
 }
+
