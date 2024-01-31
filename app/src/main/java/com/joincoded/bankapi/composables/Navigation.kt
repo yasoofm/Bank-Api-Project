@@ -25,13 +25,16 @@ fun AppContent() {
             SignUpPage(bankViewModel = bankViewModel, toDetails = {navController.navigate(Routes.accountRoute)})
         }
         composable(Routes.accountRoute){
-            AccountPage(bankViewModel = bankViewModel, toDeposit = {navController.navigate(Routes.depositRoute)}, toWithdraw = {navController.navigate(Routes.withdrawRoute)})
+            AccountPage(bankViewModel = bankViewModel, toDeposit = {navController.navigate(Routes.depositRoute)}, toWithdraw = {navController.navigate(Routes.withdrawRoute)}, toUpdate = {navController.navigate(Routes.updateRoute)})
         }
         composable(Routes.depositRoute){
             DepositComposable(bankViewModel = bankViewModel, toDetails = {navController.navigate(Routes.accountRoute)})
         }
         composable(Routes.withdrawRoute){
             WithdrawComposable(bankViewModel = bankViewModel, toDetails = {navController.navigate(Routes.accountRoute)})
+        }
+        composable(Routes.updateRoute){
+            UpdatePage(bankViewModel = bankViewModel, toDetails = {navController.navigate(Routes.accountRoute)})
         }
     }
 }

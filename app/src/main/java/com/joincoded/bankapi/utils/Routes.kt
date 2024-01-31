@@ -7,5 +7,6 @@ class Routes {
         const val accountRoute = "accountRoute"
         const val withdrawRoute = "withdrawRoute"
         const val depositRoute = "depositRoute"
+        const val updateRoute = "updateRoute"
     }
 }

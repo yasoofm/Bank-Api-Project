@@ -40,4 +40,8 @@ interface BankApiService {
 
     @GET(Constants.accountEndpoint)
     suspend fun getAccount(@Header(Constants.authorization) token: String?): Response<User>
+
+    @PUT(Constants.updateEndpoints)
+    suspend fun updateAccount(@Header(Constants.authorization) token: String?,
+                              @Body user: User):Response<Unit>
 }
