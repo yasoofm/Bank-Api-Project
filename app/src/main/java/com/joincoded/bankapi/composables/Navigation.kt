@@ -25,7 +25,9 @@ fun AppContent() {
 
     ) {
         NavHost(navController = navController, startDestination = "signupRoute") {
-
+            composable("signupRoute"){
+                SignUpPage(bankViewModel = BankViewModel())
+            }
         }
     }
 }
