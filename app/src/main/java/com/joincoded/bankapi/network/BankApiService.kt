@@ -6,6 +6,7 @@ import com.joincoded.bankapi.data.response.TokenResponse
 import com.joincoded.bankapi.utils.Constants
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -22,5 +23,6 @@ interface BankApiService {
                         @Body amountChange: AmountChange
     ): Response<Unit>
 
-
+    @GET(Constants.accountEndpoint)
+    suspend fun getAccount(@Header(Constants.authorization) token: String?): Response<User>
 }
