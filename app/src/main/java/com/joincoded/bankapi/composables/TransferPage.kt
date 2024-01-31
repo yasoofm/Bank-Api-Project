@@ -1,7 +1,5 @@
 package com.joincoded.bankapi.composables
 
-import com.joincoded.bankapi.viewmodel.BankViewModel
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,13 +17,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.joincoded.bankapi.viewmodel.BankViewModel
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun UpdatePage(bankViewModel: BankViewModel = viewModel(), toDetails: () -> Unit) {
-
+fun TransferPage(bankViewModel: BankViewModel = viewModel(), toDetails: () -> Unit) {
     var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    var amount by remember {
+        mutableStateOf("")
+    }
 
 
     Column(
@@ -34,7 +33,7 @@ fun UpdatePage(bankViewModel: BankViewModel = viewModel(), toDetails: () -> Unit
             .fillMaxWidth(),
     ) {
         Text(
-            text = "Update profile",
+            text = "Enter transfer amount",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 16.dp)
@@ -42,24 +41,22 @@ fun UpdatePage(bankViewModel: BankViewModel = viewModel(), toDetails: () -> Unit
         InputField(
             value = username,
             onValueChange = { username = it },
-            label = "UserName"
+            label = "Username"
         )
         InputField(
-            value = password,
-            onValueChange = { password = it },
-            label = "Password"
+            value = amount,
+            onValueChange = { amount = it },
+            label = "Amount"
         )
 
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
-                if(username.length > 0 && password.length > 0)
-                    bankViewModel.updateAccount(username = username, password = password, toDetails)
+                bankViewModel.transfer(username = username, amount = amount.toDouble(), toDetails)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Update")
+            Text("Transfer")
         }
     }
 }
-

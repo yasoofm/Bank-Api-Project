@@ -1,10 +1,6 @@
 package com.joincoded.bankapi.composables
 
 import android.annotation.SuppressLint
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
@@ -25,7 +21,14 @@ fun AppContent() {
             SignUpPage(bankViewModel = bankViewModel, toDetails = {navController.navigate(Routes.accountRoute)})
         }
         composable(Routes.accountRoute){
-            AccountPage(bankViewModel = bankViewModel, toDeposit = {navController.navigate(Routes.depositRoute)}, toWithdraw = {navController.navigate(Routes.withdrawRoute)}, toUpdate = {navController.navigate(Routes.updateRoute)})
+            AccountPage(bankViewModel = bankViewModel,
+                toDeposit = {navController.navigate(Routes.depositRoute)},
+                toWithdraw = {navController.navigate(Routes.withdrawRoute)},
+                toUpdate = {navController.navigate(Routes.updateRoute)},
+                toTransfer = {navController.navigate(Routes.transferRoute)},
+                logOut = {
+                    bankViewModel.token = null
+                    navController.navigate(Routes.signupRoute)})
         }
         composable(Routes.depositRoute){
             DepositComposable(bankViewModel = bankViewModel, toDetails = {navController.navigate(Routes.accountRoute)})
@@ -35,6 +38,9 @@ fun AppContent() {
         }
         composable(Routes.updateRoute){
             UpdatePage(bankViewModel = bankViewModel, toDetails = {navController.navigate(Routes.accountRoute)})
+        }
+        composable(Routes.transferRoute){
+            TransferPage(bankViewModel = bankViewModel, toDetails = {navController.navigate(Routes.accountRoute)})
         }
     }
 }
