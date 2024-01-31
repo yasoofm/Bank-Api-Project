@@ -1,7 +1,5 @@
 package com.joincoded.bankapi.composables
 
-import com.joincoded.bankapi.viewmodel.BankViewModel
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,10 +21,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.joincoded.bankapi.viewmodel.BankViewModel
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun WithdrawComposable(bankViewModel: BankViewModel = viewModel()) {
+fun DepositComposable(bankViewModel: BankViewModel = viewModel()) {
     var amount by remember { mutableStateOf("") }
 
 
@@ -37,21 +35,22 @@ fun WithdrawComposable(bankViewModel: BankViewModel = viewModel()) {
         // horizontalAlignment = LineHeightStyle.Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Enter withdrawal amount",
+            text = "Enter deposit amount",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 16.dp)
         )
+
         InputField(
             value = amount,
-            onValueChange = { amount = it },
+            onValueChange = { amount = it.toString() },
             label = "Amount"
         )
 
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
-                bankViewModel.withdraw(amount.toDouble())
+                bankViewModel.deposit(amount.toDouble())
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -60,22 +59,3 @@ fun WithdrawComposable(bankViewModel: BankViewModel = viewModel()) {
     }
 }
 
-
-@Composable
-fun InputField(
-    value: String,
-    onValueChange: (String) -> Unit,
-    label: String,
-    keyboardType: KeyboardType = KeyboardType.Text
-) {
-    OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
-        label = { Text(label) },
-        singleLine = true,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        keyboardOptions = KeyboardOptions(keyboardType = keyboardType)
-    )
-}
