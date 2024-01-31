@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.joincoded.bankapi.composables.AccountPage
 import com.joincoded.bankapi.composables.SignUpPage
 import com.joincoded.bankapi.ui.theme.BankAPITheme
 import com.joincoded.bankapi.viewmodel.BankViewModel

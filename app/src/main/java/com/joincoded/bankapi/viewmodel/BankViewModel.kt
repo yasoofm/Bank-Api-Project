@@ -15,12 +15,13 @@ import kotlinx.coroutines.launch
 class BankViewModel : ViewModel() {
     private val apiService = RetrofitHelper.getInstance().create(BankApiService::class.java)
     var token: TokenResponse? by mutableStateOf(null)
+    var user: User? by mutableStateOf(null)
 
 
     fun signup(username: String, password: String, image: String = "") {
         viewModelScope.launch {
             try {
-                val response = apiService.signup(User(username, password, image, null))
+                val response = apiService.signup(User(username, password, image, null, null))
                 token = response.body()
             } catch (e: Exception) {
                 println("Error $e")
@@ -50,6 +51,17 @@ class BankViewModel : ViewModel() {
                 println("Error $e")
             }
 
+        }
+    }
+
+    fun getAccount(){
+        viewModelScope.launch {
+            try {
+                val response = apiService.getAccount(token = token?.getBearerToken())
+                user = response.body()
+            }   catch (e: Exception) {
+                println("Error $e")
+            }
         }
     }
 
