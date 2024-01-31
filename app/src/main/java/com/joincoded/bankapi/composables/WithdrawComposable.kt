@@ -26,7 +26,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun WithdrawComposable(bankViewModel: BankViewModel = viewModel()) {
+fun WithdrawComposable(bankViewModel: BankViewModel = viewModel(), toDetails: () -> Unit) {
     var amount by remember { mutableStateOf("") }
 
 
@@ -34,7 +34,6 @@ fun WithdrawComposable(bankViewModel: BankViewModel = viewModel()) {
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth(),
-        // horizontalAlignment = LineHeightStyle.Alignment.CenterHorizontally
     ) {
         Text(
             text = "Enter withdrawal amount",
@@ -51,7 +50,7 @@ fun WithdrawComposable(bankViewModel: BankViewModel = viewModel()) {
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
-                bankViewModel.withdraw(amount.toDouble())
+                bankViewModel.withdraw(amount.toDouble(), toDetails)
             },
             modifier = Modifier.fillMaxWidth()
         ) {

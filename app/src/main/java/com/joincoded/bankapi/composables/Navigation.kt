@@ -15,7 +15,6 @@ import com.joincoded.bankapi.utils.Routes
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppContent() {
     val bankViewModel: BankViewModel = viewModel()
@@ -26,8 +25,13 @@ fun AppContent() {
             SignUpPage(bankViewModel = bankViewModel, toDetails = {navController.navigate(Routes.accountRoute)})
         }
         composable(Routes.accountRoute){
-            AccountPage(bankViewModel = bankViewModel)
-
+            AccountPage(bankViewModel = bankViewModel, toDeposit = {navController.navigate(Routes.depositRoute)}, toWithdraw = {navController.navigate(Routes.withdrawRoute)})
+        }
+        composable(Routes.depositRoute){
+            DepositComposable(bankViewModel = bankViewModel, toDetails = {navController.navigate(Routes.accountRoute)})
+        }
+        composable(Routes.withdrawRoute){
+            WithdrawComposable(bankViewModel = bankViewModel, toDetails = {navController.navigate(Routes.accountRoute)})
         }
     }
 }

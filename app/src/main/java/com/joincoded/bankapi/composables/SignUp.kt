@@ -39,9 +39,17 @@ fun SignUpPage(bankViewModel : BankViewModel, toDetails: () -> Unit){
             onClick = {
                 bankViewModel.signup(username,password,"", toDetails)
             },
-            modifier = Modifier.fillMaxWidth().padding(20.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp)
         ) {
             Text("Sign up")
+        }
+        Button(onClick = { bankViewModel.signin(username, password, toDetails) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp)) {
+            Text(text = "Sign in")
         }
     }
 }
