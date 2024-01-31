@@ -32,6 +32,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val bankViewModel: BankViewModel = viewModel()
                     SignUpPage(bankViewModel)
+
                 }
             }
         }

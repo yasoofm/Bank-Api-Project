@@ -30,6 +30,7 @@ fun SignUpPage(bankViewMoedel : BankViewModel){
         })
         TextField(value = password , onValueChange = {
             password = it
+
         })
 
         Spacer(modifier = Modifier.height(16.dp))
