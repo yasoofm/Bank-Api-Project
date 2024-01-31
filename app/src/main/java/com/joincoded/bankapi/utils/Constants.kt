@@ -10,7 +10,7 @@ class Constants {
         const val accountEndpoint = "account"
         const val withdrawEndpoint = "withdraw"
         const val transactionsEndpoint = "transactions"
-        const val transferEndpoint = "transfer/"
+        const val transferEndpoint = "transfer"
         const val updateEndpoints = "update"
     }
 

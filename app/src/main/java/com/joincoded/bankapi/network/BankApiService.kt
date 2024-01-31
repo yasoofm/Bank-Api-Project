@@ -33,8 +33,8 @@ interface BankApiService {
         @Body amountChange: AmountChange
     ): Response<Unit>
 
-    @PUT("${Constants.transferEndpoint}/{userName}")
-    suspend fun transfer(@Path("UserName") userName: String,
+    @POST("${Constants.transferEndpoint}/{userName}")
+    suspend fun transfer(@Path("userName") userName: String,
                          @Header(Constants.authorization) token: String?,
                          @Body amountChange: AmountChange): Response<Unit>
 

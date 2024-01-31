@@ -5,5 +5,6 @@ data class User(
     var password: String,
     var balance: Double?,
     var image: String?,
-    var token: String?
+    var token: String?,
+    var id: Int?
 )
