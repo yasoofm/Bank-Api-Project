@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.joincoded.bankapi.viewmodel.BankViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.joincoded.bankapi.utils.Routes
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -20,12 +21,12 @@ fun AppContent() {
     val bankViewModel: BankViewModel = viewModel()
     val navController = rememberNavController()
 
-    Scaffold(topBar = { TopAppBar(title = { Text("KFH") }) }
-
-
-    ) {
-        NavHost(navController = navController, startDestination = "signupRoute") {
-
+    NavHost(navController = navController, startDestination = Routes.signupRoute) {
+        composable(Routes.signupRoute){
+            SignUpPage(bankViewModel = bankViewModel, toDetails = {navController.navigate(Routes.accountRoute)})
+        }
+        composable(Routes.accountRoute){
+            AccountPage(bankViewModel = bankViewModel)
         }
     }
 }
