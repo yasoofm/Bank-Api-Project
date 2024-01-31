@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.joincoded.bankapi.composables.AccountPage
+import com.joincoded.bankapi.composables.DepositComposable
 import com.joincoded.bankapi.composables.SignUpPage
 import com.joincoded.bankapi.composables.WithdrawComposable
 import com.joincoded.bankapi.ui.theme.BankAPITheme
@@ -34,7 +35,7 @@ class MainActivity : ComponentActivity() {
                 ) {
 //                    val bankViewModel: BankViewModel = viewModel()
 //                    SignUpPage(bankViewModel)
-                    WithdrawComposable()
+                    DepositComposable()
 
                 }
             }
