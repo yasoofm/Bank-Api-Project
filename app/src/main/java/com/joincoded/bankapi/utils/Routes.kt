@@ -5,5 +5,7 @@ class Routes {
         const val signupRoute = "signupRoute"
         const val loginRoute = "loginRoute"
         const val accountRoute = "accountRoute"
+        const val withdrawRoute = "withdrawRoute"
+        const val depositRoute = "depositRoute"
     }
 }

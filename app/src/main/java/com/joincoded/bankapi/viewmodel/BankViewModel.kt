@@ -48,7 +48,7 @@ class BankViewModel : ViewModel() {
         }
     }
 
-    fun deposit(amount: Double) {
+    fun deposit(amount: Double, nav: () -> Unit) {
         viewModelScope.launch {
             try {
                 val response = apiService.deposit(token = token?.getBearerToken(),
@@ -60,6 +60,9 @@ class BankViewModel : ViewModel() {
                 }
             } catch (e: Exception) {
                 println("Error $e")
+            } finally {
+                getAccount()
+                nav()
             }
 
         }
@@ -76,7 +79,7 @@ class BankViewModel : ViewModel() {
         }
     }
 
-    fun withdraw(amount: Double) {
+    fun withdraw(amount: Double, nav: () -> Unit) {
         viewModelScope.launch {
             try {
                 val response = apiService.withdraw(token = token?.getBearerToken(),
@@ -88,6 +91,9 @@ class BankViewModel : ViewModel() {
                 }
             } catch (e: Exception) {
                 println("Error $e")
+            } finally {
+                getAccount()
+                nav()
             }
 
         }

@@ -24,7 +24,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.joincoded.bankapi.viewmodel.BankViewModel
 
 @Composable
-fun DepositComposable(bankViewModel: BankViewModel = viewModel()) {
+fun DepositComposable(bankViewModel: BankViewModel = viewModel(), toDetails: () -> Unit) {
     var amount by remember { mutableStateOf("") }
 
 
@@ -32,7 +32,6 @@ fun DepositComposable(bankViewModel: BankViewModel = viewModel()) {
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth(),
-        // horizontalAlignment = LineHeightStyle.Alignment.CenterHorizontally
     ) {
         Text(
             text = "Enter deposit amount",
@@ -43,18 +42,18 @@ fun DepositComposable(bankViewModel: BankViewModel = viewModel()) {
 
         InputField(
             value = amount,
-            onValueChange = { amount = it.toString() },
+            onValueChange = { amount = it },
             label = "Amount"
         )
 
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
-                bankViewModel.deposit(amount.toDouble())
+                bankViewModel.deposit(amount.toDouble(), toDetails)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Withdraw")
+            Text("Deposit")
         }
     }
 }
