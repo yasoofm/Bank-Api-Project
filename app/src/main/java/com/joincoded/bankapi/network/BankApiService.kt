@@ -1,6 +1,7 @@
 package com.joincoded.bankapi.network
 
 import com.joincoded.bankapi.data.AmountChange
+import com.joincoded.bankapi.data.Transaction
 import com.joincoded.bankapi.data.User
 import com.joincoded.bankapi.data.response.TokenResponse
 import com.joincoded.bankapi.utils.Constants
@@ -41,7 +42,12 @@ interface BankApiService {
     @GET(Constants.accountEndpoint)
     suspend fun getAccount(@Header(Constants.authorization) token: String?): Response<User>
 
+
     @PUT(Constants.updateEndpoints)
     suspend fun updateAccount(@Header(Constants.authorization) token: String?,
                               @Body user: User):Response<Unit>
+
+    @GET(Constants.transactionsEndpoint)
+    suspend fun getTransactions(@Header(Constants.authorization) token: String?):Response<List<Transaction>>
+
 }
