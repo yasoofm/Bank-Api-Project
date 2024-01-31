@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.joincoded.bankapi.composables.AccountPage
+import com.joincoded.bankapi.composables.AppContent
 import com.joincoded.bankapi.composables.DepositComposable
 import com.joincoded.bankapi.composables.SignUpPage
 import com.joincoded.bankapi.composables.WithdrawComposable
@@ -33,9 +34,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-//                    val bankViewModel: BankViewModel = viewModel()
-//                    SignUpPage(bankViewModel)
-                    DepositComposable()
+                    AppContent()
 
                 }
             }

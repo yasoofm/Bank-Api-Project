@@ -18,28 +18,31 @@ class BankViewModel : ViewModel() {
     var user: User? by mutableStateOf(null)
 
 
-    fun signup(username: String, password: String, image: String = "") {
+    fun signup(username: String, password: String, image: String = "", nav: () -> Unit) {
         viewModelScope.launch {
             try {
-
                 val response = apiService.signup(User(username, password, null, image, null))
                 token = response.body()
             } catch (e: Exception) {
                 println("Error $e")
+            } finally {
+                getAccount()
+                nav()
             }
 
         }
     }
 
-    fun signin(username: String, password: String) {
+    fun signin(username: String, password: String, nav: () -> Unit) {
         viewModelScope.launch {
             try {
-
                 val response = apiService.signin(User(username, password, null, null, null))
-
                 token = response.body()
             } catch (e: Exception) {
                 println("Error $e")
+            } finally {
+                getAccount()
+                nav()
             }
 
         }
