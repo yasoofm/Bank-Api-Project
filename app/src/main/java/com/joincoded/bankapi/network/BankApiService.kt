@@ -18,8 +18,15 @@ interface BankApiService {
 
 
     @PUT(Constants.depositEndpoint)
-    suspend fun deposit(@Header(Constants.authorization) token: String?,
-                        @Body amountChange: AmountChange
+    suspend fun deposit(
+        @Header(Constants.authorization) token: String?,
+        @Body amountChange: AmountChange
+    ): Response<Unit>
+
+    @PUT(Constants.withdrawEndpoint)
+    suspend fun withdraw(
+        @Header(Constants.authorization) token: String?,
+        @Body amountChange: AmountChange
     ): Response<Unit>
 
 
