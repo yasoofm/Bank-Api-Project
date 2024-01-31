@@ -27,6 +27,7 @@ fun AppContent() {
         }
         composable(Routes.accountRoute){
             AccountPage(bankViewModel = bankViewModel)
+
         }
     }
 }
