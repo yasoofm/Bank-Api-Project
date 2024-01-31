@@ -13,12 +13,16 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.joincoded.bankapi.composables.SignUpPage
 import com.joincoded.bankapi.ui.theme.BankAPITheme
+import com.joincoded.bankapi.viewmodel.BankViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             BankAPITheme {
                 // A surface container using the 'background' color from the theme
@@ -26,7 +30,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting(name = "<^~^>")
+                    val bankViewModel: BankViewModel = viewModel()
+                    SignUpPage(bankViewModel)
 
                 }
             }
