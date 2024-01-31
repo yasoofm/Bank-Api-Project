@@ -16,6 +16,8 @@ interface BankApiService {
     @POST(Constants.signupEndpoint)
     suspend fun signup(@Body user: User): Response<TokenResponse>
 
+    @POST(Constants.signinEndpoint)
+    suspend fun signin(@Body user: User): Response<TokenResponse>
 
     @PUT(Constants.depositEndpoint)
     suspend fun deposit(

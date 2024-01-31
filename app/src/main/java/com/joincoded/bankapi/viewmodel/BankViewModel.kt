@@ -29,6 +29,18 @@ class BankViewModel : ViewModel() {
         }
     }
 
+    fun signin(username: String, password: String) {
+        viewModelScope.launch {
+            try {
+                val response = apiService.signin(User(username, password, null, null))
+                token = response.body()
+            } catch (e: Exception) {
+                println("Error $e")
+            }
+
+        }
+    }
+
     fun deposit(amount: Double) {
         viewModelScope.launch {
             try {
