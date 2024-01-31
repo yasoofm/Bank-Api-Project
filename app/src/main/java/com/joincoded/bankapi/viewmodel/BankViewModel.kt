@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.joincoded.bankapi.data.AmountChange
+import com.joincoded.bankapi.data.Transaction
 import com.joincoded.bankapi.data.User
 import com.joincoded.bankapi.data.response.TokenResponse
 import com.joincoded.bankapi.network.BankApiService
@@ -16,6 +17,7 @@ class BankViewModel : ViewModel() {
     private val apiService = RetrofitHelper.getInstance().create(BankApiService::class.java)
     var token: TokenResponse? by mutableStateOf(null)
     var user: User? by mutableStateOf(null)
+    var transactions: List<Transaction>? by mutableStateOf(null)
 
 
     fun signup(username: String, password: String, image: String = "", nav: () -> Unit) {
@@ -114,6 +116,19 @@ class BankViewModel : ViewModel() {
                 }catch (e: Exception){
                     println("Error $e")
                 }
+        }
+    }
+
+    fun getTransactions(){
+        viewModelScope.launch {
+            try {
+                val response = apiService.getTransactions(token = token?.getBearerToken())
+                transactions = response.body()
+            } catch (e:Exception){
+
+                println("Error $e")
+            }
+
         }
     }
 }
