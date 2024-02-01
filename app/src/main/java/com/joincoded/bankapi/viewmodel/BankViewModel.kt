@@ -1,5 +1,6 @@
 package com.joincoded.bankapi.viewmodel
 
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -11,23 +12,28 @@ import com.joincoded.bankapi.data.User
 import com.joincoded.bankapi.data.response.TokenResponse
 import com.joincoded.bankapi.network.BankApiService
 import com.joincoded.bankapi.network.RetrofitHelper
+import com.joincoded.bankapi.utils.Routes
 import kotlinx.coroutines.launch
 
 class BankViewModel : ViewModel() {
     private val apiService = RetrofitHelper.getInstance().create(BankApiService::class.java)
-    var token: TokenResponse? by mutableStateOf(null)
+    var myToken: TokenResponse? by mutableStateOf(null)
     var user: User? by mutableStateOf(null)
     var transactions: List<Transaction>? by mutableStateOf(null)
+    var context: Context? = null
+
+
 
     fun signup(username: String, password: String, image: String = "", nav: () -> Unit) {
         viewModelScope.launch {
             try {
                 val response = apiService.signup(User(username, password, null, image, null, null))
-                token = response.body()
+                myToken = response.body()
             } catch (e: Exception) {
                 println("Error $e")
             } finally {
-                if(token != null) {
+                if (myToken != null) {
+                    saveToken()
                     getAccount()
                     getTransactions()
                     nav()
@@ -41,11 +47,12 @@ class BankViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val response = apiService.signin(User(username, password, null, null, null, null))
-                token = response.body()
+                myToken = response.body()
             } catch (e: Exception) {
                 println("Error $e")
             } finally {
-                if(token != null) {
+                if (myToken != null) {
+                    saveToken()
                     getAccount()
                     getTransactions()
                     nav()
@@ -59,7 +66,7 @@ class BankViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val response = apiService.deposit(
-                    token = token?.getBearerToken(),
+                    token = myToken?.getBearerToken(),
                     AmountChange(amount)
                 )
                 if (response.isSuccessful) {
@@ -81,7 +88,7 @@ class BankViewModel : ViewModel() {
     fun getAccount() {
         viewModelScope.launch {
             try {
-                val response = apiService.getAccount(token = token?.getBearerToken())
+                val response = apiService.getAccount(token = myToken?.getBearerToken())
                 user = response.body()
             } catch (e: Exception) {
                 println("Error $e")
@@ -93,7 +100,7 @@ class BankViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val response = apiService.withdraw(
-                    token = token?.getBearerToken(),
+                    token = myToken?.getBearerToken(),
                     AmountChange(amount)
                 )
             } catch (e: Exception) {
@@ -112,7 +119,7 @@ class BankViewModel : ViewModel() {
             try {
                 val response = apiService.transfer(
                     userName = username,
-                    token = token?.getBearerToken(),
+                    token = myToken?.getBearerToken(),
                     amountChange = AmountChange(amount)
                 )
                 if (response.isSuccessful) {
@@ -131,12 +138,15 @@ class BankViewModel : ViewModel() {
             }
         }
     }
-    fun updateAccount(username: String,password: String, nav: () -> Unit){
+
+    fun updateAccount(username: String, password: String, nav: () -> Unit) {
         viewModelScope.launch {
             try {
-                val response = apiService.updateAccount(token = token?.getBearerToken(),
-                    user = User(username, password, null, "", null, null))
-            } catch (e: Exception){
+                val response = apiService.updateAccount(
+                    token = myToken?.getBearerToken(),
+                    user = User(username, password, null, "", null, null)
+                )
+            } catch (e: Exception) {
                 println("Error $e")
             } finally {
                 getAccount()
@@ -148,16 +158,32 @@ class BankViewModel : ViewModel() {
         }
     }
 
-    fun getTransactions(){
+    fun getTransactions() {
         viewModelScope.launch {
             try {
-                val response = apiService.getTransactions(token = token?.getBearerToken())
+                val response = apiService.getTransactions(token = myToken?.getBearerToken())
                 transactions = response.body()
-            } catch (e:Exception){
+            } catch (e: Exception) {
                 println("Error $e")
             }
 
         }
     }
+
+    fun saveToken() {
+        val sharedPref = context?.getSharedPreferences("tokenFile", Context.MODE_PRIVATE)
+        sharedPref?.edit()?.putString("MY_TOKEN", myToken.toString())?.apply()
+    }
+
+    fun getToken() {
+        val sharedPref = context?.getSharedPreferences("tokenFile", Context.MODE_PRIVATE)
+//        myToken = TokenResponse(token = sharedPref?.getString("MY_TOKEN", null))
+        var savedToken = sharedPref?.getString("MY_TOKEN", null)
+        if (savedToken != null)
+            myToken = TokenResponse(token = savedToken)
+
+        println("TOKEN ${savedToken}")
+    }
+
 }
 

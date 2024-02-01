@@ -29,7 +29,6 @@ import androidx.compose.ui.unit.sp
 import com.joincoded.bankapi.R
 import com.joincoded.bankapi.data.Transaction
 import com.joincoded.bankapi.data.User
-import com.joincoded.bankapi.ui.theme.BankAPITheme
 
 
 @Composable
@@ -101,21 +100,3 @@ fun TransactionCard(transaction: Transaction, user: User?){
     }
 }
 
-
-@Preview(showBackground = true)
-@Composable
-fun TransactionCardPreview() {
-    val transactions = listOf<Transaction>(
-        Transaction(5, 8, 100.0, "deposit"),
-        Transaction(5, 8, 50.0, "transfer"),
-        Transaction(56, 8, 30.0, "transfer"),
-        Transaction(56, 8, 20.0, "transfer"),
-        Transaction(5, 8, 20.0, "withdraw"),
-        Transaction(5, 8, 50000.0, "deposit"),
-        Transaction(5, 8, 1000.0, "transfer")
-    )
-
-    BankAPITheme {
-        TransactionsList(transactions = transactions, user = User("","",0.0,"","",5))
-    }
-}

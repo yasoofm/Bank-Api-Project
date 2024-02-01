@@ -2,11 +2,14 @@ package com.joincoded.bankapi.composables
 
 import com.joincoded.bankapi.viewmodel.BankViewModel
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
@@ -16,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -32,29 +36,35 @@ fun WithdrawComposable(bankViewModel: BankViewModel = viewModel(), toDetails: ()
     Column(
         modifier = Modifier
             .padding(16.dp)
-            .fillMaxWidth(),
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = "Enter withdrawal amount",
+            text = "Withdraw",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 16.dp)
         )
-        InputField(
-            value = amount,
-            onValueChange = { amount = it },
-            label = "Amount"
-        )
+        Column {
+            InputField(
+                value = amount,
+                onValueChange = { amount = it },
+                label = "Amount"
+            )
 
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(
-            onClick = {
-                bankViewModel.withdraw(amount.toDouble(), toDetails)
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Withdraw")
+            Spacer(modifier = Modifier.height(30.dp))
+            Button(
+                onClick = {
+                    bankViewModel.withdraw(amount.toDouble(), toDetails)
+                },
+                modifier = Modifier
+                    .width(300.dp)
+                    .align(Alignment.CenterHorizontally)
+            ) {
+                Text("Withdraw")
+            }
         }
+        Spacer(modifier = Modifier.height(100.dp))
     }
 }
 
